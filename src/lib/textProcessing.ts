@@ -1,26 +1,33 @@
-
 import { ProcessingResult, ProcessingType, TextStats } from "@/types";
-
-export const processText = (text: string, type: ProcessingType): ProcessingResult => {
+import { SHA256 } from "crypto-js";
+export const processText = (
+  text: string,
+  type: ProcessingType
+): ProcessingResult => {
   let processedText = text;
-  
+
   switch (type) {
-    case 'capitalize':
-      processedText = text
-        .split(' ')
-        .map(word => word.length > 0 ? word[0].toUpperCase() + word.slice(1) : '')
-        .join(' ');
+    case "SHA-256":
+      processedText = SHA256(text).toString();
       break;
-    case 'lowercase':
+    case "capitalize":
+      processedText = text
+        .split(" ")
+        .map((word) =>
+          word.length > 0 ? word[0].toUpperCase() + word.slice(1) : ""
+        )
+        .join(" ");
+      break;
+    case "lowercase":
       processedText = text.toLowerCase();
       break;
-    case 'remove-whitespace':
-      processedText = text.replace(/\s+/g, '');
+    case "remove-whitespace":
+      processedText = text.replace(/\s+/g, "");
       break;
-    case 'trim':
+    case "trim":
       processedText = text.trim();
       break;
-    case 'none':
+    case "none":
     default:
       processedText = text;
       break;
@@ -28,32 +35,34 @@ export const processText = (text: string, type: ProcessingType): ProcessingResul
 
   return {
     text: processedText,
-    stats: calculateTextStats(processedText)
+    stats: calculateTextStats(processedText),
   };
 };
 
 export const calculateTextStats = (text: string): TextStats => {
   return {
-    wordCount: text.split(/\s+/).filter(word => word.length > 0).length,
+    wordCount: text.split(/\s+/).filter((word) => word.length > 0).length,
     charCount: text.length,
-    charCountNoSpaces: text.replace(/\s+/g, '').length,
-    lineCount: text.split('\n').length
+    charCountNoSpaces: text.replace(/\s+/g, "").length,
+    lineCount: text.split("\n").length,
   };
 };
 
 export const getProcessingLabel = (type: ProcessingType): string => {
   switch (type) {
-    case 'capitalize':
-      return 'Capitalize Words';
-    case 'lowercase':
-      return 'Convert to Lowercase';
-    case 'remove-whitespace':
-      return 'Remove Whitespace';
-    case 'trim':
-      return 'Trim';
-    case 'none':
-      return 'No Processing';
+    case "SHA-256":
+      return "SHA-256";
+    case "capitalize":
+      return "Capitalize Words";
+    case "lowercase":
+      return "Convert to Lowercase";
+    case "remove-whitespace":
+      return "Remove Whitespace";
+    case "trim":
+      return "Trim";
+    case "none":
+      return "No Processing";
     default:
-      return 'Unknown';
+      return "Unknown";
   }
 };

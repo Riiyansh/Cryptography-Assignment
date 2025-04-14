@@ -1,4 +1,3 @@
-
 export interface TextEntry {
   id: string;
   originalText: string;
@@ -8,7 +7,13 @@ export interface TextEntry {
   updatedAt: string;
 }
 
-export type ProcessingType = 'capitalize' | 'lowercase' | 'remove-whitespace' | 'trim' | 'none';
+export type ProcessingType =
+  | "SHA-256"
+  | "capitalize"
+  | "lowercase"
+  | "remove-whitespace"
+  | "trim"
+  | "none";
 
 export interface ProcessingResult {
   text: string;
