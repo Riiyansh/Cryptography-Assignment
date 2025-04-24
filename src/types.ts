@@ -8,7 +8,11 @@ export interface TextEntry {
 }
 
 export type ProcessingType =
-  | "SHA-256"
+  | "SHA-256-64"
+  | "SHA-256-32"
+  | "SHA-256-24"
+  | "SHA-256-16"
+  | "SHA-256-10"
   | "capitalize"
   | "lowercase"
   | "remove-whitespace"

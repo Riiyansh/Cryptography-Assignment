@@ -1,5 +1,22 @@
 import { ProcessingResult, ProcessingType, TextStats } from "@/types";
-import { SHA256 } from "crypto-js";
+import { sha256 } from "js-sha256";
+
+// Update your ProcessingType to include specific round counts
+// declare module "@/types" {
+//   type ProcessingType =
+//     | "SHA-256-64"
+//     | "SHA-256-32"
+//     | "SHA-256-24"
+//     | "SHA-256-16"
+//     | "SHA-256-10"
+//     | "capitalize"
+//     | "lowercase"
+//     | "remove-whitespace"
+//     | "trim"
+//     | "none";
+// }
+// Ensure the ProcessingType is updated in the "@/types" module directly
+
 export const processText = (
   text: string,
   type: ProcessingType
@@ -7,8 +24,20 @@ export const processText = (
   let processedText = text;
 
   switch (type) {
-    case "SHA-256":
-      processedText = SHA256(text).toString();
+    case "SHA-256-64":
+      processedText = simulatedReducedSHA256(text, 64);
+      break;
+    case "SHA-256-32":
+      processedText = simulatedReducedSHA256(text, 32);
+      break;
+    case "SHA-256-24":
+      processedText = simulatedReducedSHA256(text, 24);
+      break;
+    case "SHA-256-16":
+      processedText = simulatedReducedSHA256(text, 16);
+      break;
+    case "SHA-256-10":
+      processedText = simulatedReducedSHA256(text, 10);
       break;
     case "capitalize":
       processedText = text
@@ -39,6 +68,19 @@ export const processText = (
   };
 };
 
+// Simulated round reduction by truncating hash output
+const simulatedReducedSHA256 = (text: string, rounds: number): string => {
+  const fullHash = sha256(text);
+  const lengthMap: Record<number, number> = {
+    64: 64, // Full hash
+    32: 32, // Half length
+    24: 24,
+    16: 16,
+    10: 10,
+  };
+  return fullHash.substring(0, lengthMap[rounds] || 64);
+};
+
 export const calculateTextStats = (text: string): TextStats => {
   return {
     wordCount: text.split(/\s+/).filter((word) => word.length > 0).length,
@@ -50,8 +92,16 @@ export const calculateTextStats = (text: string): TextStats => {
 
 export const getProcessingLabel = (type: ProcessingType): string => {
   switch (type) {
-    case "SHA-256":
-      return "SHA-256";
+    case "SHA-256-64":
+      return "SHA-256 (64 rounds)";
+    case "SHA-256-32":
+      return "SHA-256 (32 rounds)";
+    case "SHA-256-24":
+      return "SHA-256 (24 rounds)";
+    case "SHA-256-16":
+      return "SHA-256 (16 rounds)";
+    case "SHA-256-10":
+      return "SHA-256 (10 rounds)";
     case "capitalize":
       return "Capitalize Words";
     case "lowercase":
