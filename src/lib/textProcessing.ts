@@ -1,22 +1,6 @@
 import { ProcessingResult, ProcessingType, TextStats } from "@/types";
 import { sha256 } from "js-sha256";
 
-// Update your ProcessingType to include specific round counts
-// declare module "@/types" {
-//   type ProcessingType =
-//     | "SHA-256-64"
-//     | "SHA-256-32"
-//     | "SHA-256-24"
-//     | "SHA-256-16"
-//     | "SHA-256-10"
-//     | "capitalize"
-//     | "lowercase"
-//     | "remove-whitespace"
-//     | "trim"
-//     | "none";
-// }
-// Ensure the ProcessingType is updated in the "@/types" module directly
-
 export const processText = (
   text: string,
   type: ProcessingType

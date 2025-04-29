@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ProcessingType } from "@/types";
@@ -20,10 +19,6 @@ const ProcessingOptions = ({
     "SHA-256-24",
     "SHA-256-16",
     "SHA-256-10",
-    // "SHA-256",
-    // "lowercase",
-    // "remove-whitespace",
-    // "trim",
   ];
 
   return (
